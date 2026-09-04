@@ -1,0 +1,15 @@
+﻿TICKET TKT-1043  |  Severity: Medium  |  Source: User report / email gateway  |  Time: 2026-09-03 09:14 CT
+
+User finance@corp.example.com forwarded a suspicious email. File on Desktop: TKT-1043_phishing_email.eml
+
+Open it in Notepad (right-click > Open with > Notepad). You are L1. Answer these:
+
+1. What does the From: line claim? What domain is that?
+2. Look at Reply-To: — is it the same domain as From?
+3. Authentication-Results: what do SPF and DMARC say (pass or fail)?
+4. The link TEXT says login.microsoftonline.com — what does the real href point to? (look for href=)
+5. Why is that a red flag?
+6. True positive phishing or false positive?
+7. What do you do next (user, block, escalate)?
+
+Do NOT click the link in a real browser. Read the file only.

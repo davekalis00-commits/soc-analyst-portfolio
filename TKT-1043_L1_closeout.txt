@@ -1,0 +1,39 @@
+﻿TKT-1043 — L1 close-out (lab / simulated)
+Author: David Kaliszczak
+Date drafted: 2026-09-04
+
+ALERT
+User-reported suspicious email to finance@corp.example.com claiming Microsoft 365 mailbox deletion.
+Time: 2026-09-03 09:14 CT. Severity: Medium. Source: user report / email gateway (practice .eml).
+
+WHAT I CHECKED
+1. From: display "Microsoft 365 Security" <security@microsoft.com>
+2. Reply-To: helpdesk-reset@secure-notify.net (different domain — not Microsoft)
+3. Authentication-Results on mx.corp.example.com:
+   - SPF = fail (sender IP 185.220.101.99, mailfrom mailer-secure-notify.net)
+   - DKIM = none
+   - DMARC = fail (header.from=microsoft.com)
+4. Link bait-and-switch:
+   - Visible text claims: https://login.microsoftonline.com/common/oauth2/verify
+   - Real href: http://185.220.101.99/microsoft-verify/login.html
+5. Body uses urgency: "12 hours" / "permanently deleted"
+
+DISPOSITION
+True positive — phishing (credential harvesting attempt).
+
+Why not FP: brand spoof + Reply-To mismatch + SPF/DMARC fail + href to raw attacker IP while text shows Microsoft login.
+
+MITRE ATT&CK
+Tactic: Initial Access
+Technique: Phishing — Spearphishing Link
+ID: T1566.002
+
+NEXT STEPS (L1)
+1. Tell user: do not click; if they entered a password, force reset + revoke sessions / MFA check
+2. Block sender domains (secure-notify.net / mailer-secure-notify.net) and URL/IP 185.220.101.99 at email gateway / web filter
+3. Search mail logs for other recipients of same subject/Message-ID/URL
+4. Escalate to L2 / IR if anyone submitted credentials or if multiple mailboxes hit
+5. Document headers, SPF/DMARC, href vs display URL, MITRE T1566.002 in the ticket
+
+NOTES
+Practice / simulated phishing sample for portfolio. Not a real Microsoft message. Do not visit the href.
