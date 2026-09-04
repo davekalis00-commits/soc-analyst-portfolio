@@ -1,0 +1,30 @@
+﻿Return-Path: <bounce@mailer-secure-notify.net>
+Received: from mail-sor-f41.google.com (mail-sor-f41.google.com [209.85.220.41])
+ by mx.corp.example.com (Postfix) with ESMTPS id 4Abc91
+ for <finance@corp.example.com>; Wed, 3 Sep 2026 09:14:22 -0500 (CDT)
+Received: from unknown (HELO spoof-m365.secure-notify.net) ([185.220.101.99])
+ by mail-sor-f41.google.com with ESMTPS id fake123; Wed, 3 Sep 2026 07:14:18 -0700
+Authentication-Results: mx.corp.example.com;
+ spf=fail (sender IP is 185.220.101.99) smtp.mailfrom=mailer-secure-notify.net;
+ dkim=none;
+ dmarc=fail (p=none) header.from=microsoft.com
+From: "Microsoft 365 Security" <security@microsoft.com>
+Reply-To: helpdesk-reset@secure-notify.net
+To: finance@corp.example.com
+Subject: URGENT: Your mailbox will be deleted in 12 hours - verify now
+Date: Wed, 3 Sep 2026 09:14:10 -0500
+MIME-Version: 1.0
+Content-Type: text/html; charset="UTF-8"
+Message-ID: <20260903141410.99.evil@secure-notify.net>
+X-Mailer: MassMailer Pro 3.2
+
+<html>
+<body>
+<p>Dear User,</p>
+<p><b>We detected unusual sign-in activity on your Microsoft 365 account.</b></p>
+<p>If you do not verify within <b>12 hours</b>, your mailbox will be <b>permanently deleted</b>.</p>
+<p>Click below to secure your account immediately:</p>
+<p><a href="http://185.220.101.99/microsoft-verify/login.html">https://login.microsoftonline.com/common/oauth2/verify</a></p>
+<p>Thank you,<br/>Microsoft 365 Security Team</p>
+</body>
+</html>
