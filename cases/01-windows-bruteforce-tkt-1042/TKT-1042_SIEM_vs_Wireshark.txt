@@ -1,0 +1,20 @@
+﻿TKT-1042 — SIEM vs Wireshark (lab notes)
+David Kaliszczak
+
+SAME KIND OF ATTACK, TWO DOORS
+Both are brute force / credential stuffing against jsmith until a password works (MITRE T1110).
+
+1) SIEM / Windows logs — TKT-1042_SIEM_report.txt
+   What the computer security log recorded: 4625 fails then 4624 success, SrcIP, account, Logon Type.
+   Fast for L1 triage. You do NOT see the actual passwords.
+
+2) Wireshark / pcap — ftp_bruteforce.pcap
+   Packet capture = raw network traffic saved to a file.
+   Follow TCP Stream shows USER/PASS, 4x 530, then Welcome1 → 230.
+   Deeper proof on the wire. Works here because FTP is cleartext.
+
+In a real SOC you usually get the SIEM alert first, then pull a pcap if you need wire proof.
+For this portfolio: matching practice stories (Windows logon + FTP), same playbook idea.
+
+Screenshot saved: TKT-1042_wireshark.png
+Full close-out: TKT-1042_L1_closeout.txt

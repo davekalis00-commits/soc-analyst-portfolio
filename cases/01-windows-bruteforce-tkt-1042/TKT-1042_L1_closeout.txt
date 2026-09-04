@@ -1,0 +1,44 @@
+TKT-1042 — L1 close-out (lab / simulated)
+Author: David Kaliszczak
+Date drafted: 2026-09-03
+
+ALERT
+Multiple failed logons then a success. User jsmith. Source IP 185.220.101.47.
+Time window: 2026-09-01 22:14–22:15 CT. Severity: High. Source: SIEM (practice export).
+
+WHAT I FOUND
+- 8x EventCode 4625 (failed logon) from SrcIP 185.220.101.47 between 22:14 and 22:15
+  (7 against account jsmith, 1 spray hit on labuser01)
+- Then EventCode 4624 (successful logon), Logon Type 3 (network), account jsmith,
+  same SrcIP 185.220.101.47 — attacker obtained access
+- Separate later 4624 Logon Type 2 for labuser01 from internal 10.18.4.22 is not part of the attack
+
+DISPOSITION
+True positive — not a user forgetting a password.
+Why: fast burst (~12s apart), public/unusual source IP, spray across more than one account,
+then network (Type 3) success from that same IP.
+
+MITRE ATT&CK
+Tactic: Credential Access
+Technique: Brute Force
+ID: T1110
+
+NEXT STEPS (L1)
+1. Disable account jsmith or force password reset (per identity playbook)
+2. Block SrcIP 185.220.101.47 at firewall / edge; check for other hosts hit by this IP
+3. Escalate to L2 for possible compromise (successful 4624 — check lateral movement,
+   persistence, outbound after 22:15:36 on WIN-JSMITH)
+4. Document counts, SrcIP, account, Logon Type, MITRE T1110 in the ticket
+
+NOTES
+Practice / simulated SIEM data for portfolio. Not production.
+
+
+WIRESHARK / PCAP EVIDENCE
+File: ftp_bruteforce.pcap (Desktop) | Screenshot: TKT-1042_wireshark.png (Desktop)
+Same kind of attack, different door: FTP login brute force against jsmith (not a separate technique).
+- Filter: ftp → Follow → TCP Stream
+- 4x response 530 Login incorrect (failed password attempts)
+- 1x response 230 User jsmith logged in (password Welcome1)
+- Maps to same MITRE: Credential Access / Brute Force T1110
+- SIEM = what Windows logged (4625/4624). PCAP = what went over the wire (cleartext FTP USER/PASS).
